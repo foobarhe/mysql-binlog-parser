@@ -1,5 +1,9 @@
 mysql binlog (row-based) parser
 
+Note: 
+be sure to use binlog-format=ROW in /etc/mysql/my.cnf
+如果没有设置 binlog_format=ROW, 则默认是 statement based, 有更新收到的是 QUERY event, 其中可以获取 database和query.
+
 based on official api: mysql-replication-listener
 // https://code.launchpad.net/~mysql/mysql-replication-listener/trunk
 
