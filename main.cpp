@@ -51,6 +51,8 @@ int main(int argc, char **argv)
     mysql::Binary_log_event *event;
     stringstream ss;
 
+    unsigned long nextPos;
+
     // loop for events
     while (true) {
         res = binlog.wait_for_next_event(&event);
@@ -59,10 +61,13 @@ int main(int argc, char **argv)
             break;
         }
 
+        nextPos = event->header()->next_position;
+
         ss.str("");
         event->print_long_info(ss);
         cout << endl << "--- MAIN: got event" << endl
         << "type=" << event->get_event_type()<<"(" << mysql::system::get_event_type_str(event->get_event_type())<<")" << endl
+        << "nextPos=" << nextPos << endl
         << "info="<< ss.str() << endl;
 
 //        // Perform a special action based on event type
